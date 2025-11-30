@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { DiceValue } from '../types';
+import { DiceValue } from '../types.ts';
 
 interface DieProps {
   value: DiceValue;

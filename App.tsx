@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import Die from './components/Die';
-import { useShake } from './hooks/useShake';
-import { getDiceCommentary } from './services/geminiService';
-import { DiceValue, RollResult } from './types';
+import Die from './components/Die.tsx';
+import { useShake } from './hooks/useShake.ts';
+import { getDiceCommentary } from './services/geminiService.ts';
+import { DiceValue, RollResult } from './types.ts';
 
 const App: React.FC = () => {
   const [dice1, setDice1] = useState<DiceValue>(1);

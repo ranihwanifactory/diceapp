@@ -9,6 +9,18 @@
       if (typeof process === 'undefined') {
         window.process = { env: {} };
       }
+      // Global error handler to catch initialization errors
+      window.addEventListener('error', function(e) {
+        const root = document.getElementById('root');
+        if (root && root.innerHTML.trim() === '') {
+          const errDiv = document.createElement('div');
+          errDiv.style.color = '#ff6b6b';
+          errDiv.style.padding = '20px';
+          errDiv.style.background = 'rgba(0,0,0,0.8)';
+          errDiv.innerText = 'Application Error: ' + e.message;
+          document.body.appendChild(errDiv);
+        }
+      });
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -98,9 +110,11 @@
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
   }
 }
 </script>
