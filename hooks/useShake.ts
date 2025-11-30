@@ -14,7 +14,10 @@ export const useShake = (onShake: () => void, threshold = 20) => {
   const lastTime = useRef<number>(0);
 
   // Check if permission is needed (iOS 13+)
-  const needsPermission = typeof (DeviceMotionEvent as unknown as DeviceMotionEventiOS).requestPermission === 'function';
+  // Safety check: ensure DeviceMotionEvent is defined before accessing it
+  const needsPermission = 
+    typeof DeviceMotionEvent !== 'undefined' && 
+    typeof (DeviceMotionEvent as unknown as DeviceMotionEventiOS).requestPermission === 'function';
 
   const requestPermission = async () => {
     if (needsPermission) {
@@ -63,7 +66,7 @@ export const useShake = (onShake: () => void, threshold = 20) => {
     // If permission is granted or not needed, add listener
     if (permissionGranted || !needsPermission) {
       // Check if device actually supports it
-      if (!window.DeviceMotionEvent) {
+      if (typeof window.DeviceMotionEvent === 'undefined') {
         setIsSupported(false);
         return;
       }
@@ -72,7 +75,9 @@ export const useShake = (onShake: () => void, threshold = 20) => {
     }
 
     return () => {
-      window.removeEventListener('devicemotion', handleMotion);
+      if (typeof window.DeviceMotionEvent !== 'undefined') {
+        window.removeEventListener('devicemotion', handleMotion);
+      }
     };
   }, [permissionGranted, needsPermission, handleMotion]);
 

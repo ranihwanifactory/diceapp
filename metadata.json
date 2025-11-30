@@ -1,5 +1,8 @@
 {
   "name": "Shake Dice AI",
   "description": "흔들어서 주사위를 던지는 게임입니다. 주사위 결과에 따라 AI가 오늘의 운세를 알려줍니다.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "accelerometer",
+    "gyroscope"
+  ]
 }
