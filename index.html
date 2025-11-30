@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Shake Dice AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --dice-size: 80px;
+        --dice-color: #ffffff;
+        --dot-color: #1e293b;
+      }
+      @media (min-width: 640px) {
+        :root {
+          --dice-size: 100px;
+        }
+      }
+
+      body {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        background-color: #0f172a;
+      }
+
+      /* 3D Scene setup */
+      .scene {
+        width: var(--dice-size);
+        height: var(--dice-size);
+        perspective: 1000px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .cube {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 1.2s cubic-bezier(0.15, 0.9, 0.35, 1.2); /* Bouncy Easing */
+        will-change: transform;
+      }
+
+      .face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(145deg, #ffffff, #e6e6e6);
+        border-radius: 16%;
+        border: 1px solid #cbd5e1;
+        display: grid;
+        grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+        padding: 8%;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        backface-visibility: hidden; /* Optimization */
+      }
+      
+      /* Make dots look realistic with inset shadow */
+      .dot {
+        align-self: center;
+        justify-self: center;
+        width: 65%;
+        height: 65%;
+        background-color: var(--dot-color);
+        border-radius: 50%;
+        box-shadow: inset 0 2px 3px rgba(0,0,0,0.8), 0 1px 1px rgba(255,255,255,0.3);
+      }
+
+      /* Face placements */
+      .face-1 { transform: rotateY(0deg) translateZ(calc(var(--dice-size) / 2)); }
+      .face-6 { transform: rotateY(180deg) translateZ(calc(var(--dice-size) / 2)); }
+      .face-2 { transform: rotateX(90deg) translateZ(calc(var(--dice-size) / 2)); }
+      .face-5 { transform: rotateX(-90deg) translateZ(calc(var(--dice-size) / 2)); }
+      .face-3 { transform: rotateY(90deg) translateZ(calc(var(--dice-size) / 2)); }
+      .face-4 { transform: rotateY(-90deg) translateZ(calc(var(--dice-size) / 2)); }
+
+      /* Floor shadow for 3D effect */
+      .floor-shadow {
+        position: absolute;
+        width: 120%;
+        height: 120%;
+        background: radial-gradient(rgba(0,0,0,0.4), transparent 70%);
+        transform: rotateX(90deg) translateZ(calc(var(--dice-size) / 1.5));
+        left: -10%;
+        top: 50%;
+        z-index: -1;
+        filter: blur(8px);
+        transition: opacity 0.5s;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-slate-900 text-white h-screen overflow-hidden selection:bg-purple-500 selection:text-white">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
